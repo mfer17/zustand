@@ -1,14 +1,36 @@
+import { DragEvent } from 'react';
 import { IoCheckmarkCircleOutline, IoEllipsisHorizontalOutline, IoReorderTwoOutline } from 'react-icons/io5';
+import { Task, TaskStatus } from '../../interfaces';
+import { SingleTask } from './SingleTask';
+
 
 interface Props {
   title: string;
-  value: 'pending' | 'in-progress' | 'done';
+  tasks: Task[];
+  value: TaskStatus;
 }
 
 
-export const JiraTasks = ({ title }: Props) => {
+export const JiraTasks = ({ title, value, tasks }: Props) => {
+  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    console.log("on drag over")
+  }
+  const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    console.log("on drag leave")
+  }
+  const handleDragDrop = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    console.log("on drag drop", value)
+  }
+
   return (
-    <div className="!text-black relative flex flex-col rounded-[20px]  bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]">
+    <div 
+      onDragOver={ handleDragOver }
+      onDragLeave={ handleDragLeave }
+      onDrop={handleDragDrop}
+      className="!text-black relative flex flex-col rounded-[20px]  bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]">
 
 
       {/* Task Header */ }
@@ -33,31 +55,11 @@ export const JiraTasks = ({ title }: Props) => {
 
       {/* Task Items */ }
       <div className="h-full w-full">
-
-        <div className="mt-5 flex items-center justify-between p-2">
-          <div className="flex items-center justify-center gap-2">
-            <p className="text-base font-bold text-navy-700">
-              Tarea número 1
-            </p>
-          </div>
-          <span className=" h-6 w-6 text-navy-700 cursor-pointer">
-            <IoReorderTwoOutline />
-          </span>
-        </div>
-
-        <div className="mt-5 flex items-center justify-between p-2">
-          <div className="flex items-center justify-center gap-2">
-            <p className="text-base font-bold text-navy-700">
-              Tarea número 2
-            </p>
-          </div>
-          <span className=" h-6 w-6 text-navy-700 cursor-pointer">
-            <IoReorderTwoOutline />
-          </span>
-        </div>
-
-        
-
+        {
+          tasks.map(element => (
+            <SingleTask key={element.id} task={element} />
+          ))
+        }
       </div>
     </div>
   );
