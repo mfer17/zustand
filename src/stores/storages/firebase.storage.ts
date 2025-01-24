@@ -13,7 +13,7 @@ const firebaseAPI: StateStorage = {
     },
 
     setItem: async function ( name: string, value: string ): Promise<void> {
-        const data = await fetch(`${firebaseUrl}/${name}.json`, {
+        await fetch(`${firebaseUrl}/${name}.json`, {
             method: 'PUT',
             body: value
         }).then(res => res.json());
