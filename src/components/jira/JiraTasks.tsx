@@ -1,36 +1,36 @@
-import { DragEvent } from 'react';
-import { IoCheckmarkCircleOutline, IoEllipsisHorizontalOutline, IoReorderTwoOutline } from 'react-icons/io5';
+import { IoAddOutline, IoCheckmarkCircleOutline, IoEllipsisHorizontalOutline, IoReorderTwoOutline } from 'react-icons/io5';
+import classNames from 'classnames';
 import { Task, TaskStatus } from '../../interfaces';
 import { SingleTask } from './SingleTask';
+import { useTasks } from '../../hooks/useTasks';
 
 
 interface Props {
   title: string;
   tasks: Task[];
-  value: TaskStatus;
+  status: TaskStatus;
 }
 
 
-export const JiraTasks = ({ title, value, tasks }: Props) => {
-  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    console.log("on drag over")
-  }
-  const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    console.log("on drag leave")
-  }
-  const handleDragDrop = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    console.log("on drag drop", value)
-  }
+export const JiraTasks = ({ title, status, tasks }: Props) => {
+
+  const {isDragging, onDragOver, handleAddTask, handleDragOver, handleDragLeave, handleDragDrop} = useTasks( { status } );
 
   return (
     <div 
       onDragOver={ handleDragOver }
       onDragLeave={ handleDragLeave }
       onDrop={handleDragDrop}
-      className="!text-black relative flex flex-col rounded-[20px]  bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]">
+      className={
+        classNames(
+          "!text-black relative flex flex-col rounded-[20px] border-4 bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]", 
+          {
+            "border-blue-500 border-dotted": isDragging,
+            "border-green-500 border-dotted": isDragging && onDragOver,
+            
+          }
+        )
+      }>
 
 
       {/* Task Header */ }
@@ -47,8 +47,8 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
           <h4 className="ml-4 text-xl font-bold text-navy-700">{ title }</h4>
         </div>
 
-        <button>
-          <IoEllipsisHorizontalOutline />
+        <button onClick={handleAddTask}>
+          <IoAddOutline  />
         </button>
 
       </div>
