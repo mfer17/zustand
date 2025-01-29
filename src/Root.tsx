@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation, BrowserRouter } from 'react-router-dom';
 
 
 export const Root = () => {
@@ -10,8 +10,8 @@ export const Root = () => {
   }
   
   return (
-    <main>
+    <BrowserRouter basename="/zustand">
       <Outlet />
-    </main>
+    </BrowserRouter>
   )
 }
