@@ -15,10 +15,4 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
-  overrides: [
-    {
-      files: ["src/**/*.{js,jsx,ts,tsx}"], // Incluye todos los archivos de la carpeta src
-      excludedFiles: ["node_modules/**"], // Excluye node_modules
-    },
-  ]
 }
