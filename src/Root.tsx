@@ -10,8 +10,8 @@ export const Root = () => {
   }
   
   return (
-    <BrowserRouter basename="/zustand">
+    <main>
       <Outlet />
-    </BrowserRouter>
+    </main>
   )
 }
