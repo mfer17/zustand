@@ -1,8 +1,8 @@
 import { type StateCreator, create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import { customSessionStorage } from "../storages/session-storage";
+/*import { customSessionStorage } from "../storages/session-storage";
 import { firebaseStorage } from "../storages/firebase.storage";
-import { logger } from "../middlewares/logger.middleware";
+import { logger } from "../middlewares/logger.middleware";*/
 
 
 interface PersonState {
