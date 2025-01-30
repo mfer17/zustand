@@ -1,8 +1,15 @@
 import { FormEvent } from 'react';
+import { useAuthStore } from '../../stores';
+import { useNavigate } from 'react-router-dom';
 
 export const LoginPage = () => {
 
-  const onSubmit = (event: FormEvent<HTMLFormElement> ) => {
+  const navigate = useNavigate();
+
+  const loginUser = useAuthStore( state => state.loginUser );
+
+
+  const onSubmit = async (event: FormEvent<HTMLFormElement> ) => {
     event.preventDefault();
     // const { username, password, remember } = event.target as HTMLFormElement;
     const { username, password,remember } = event.target as typeof event.target & {
@@ -12,9 +19,20 @@ export const LoginPage = () => {
     };
     console.log(username.value, password.value, remember.checked);
 
-    username.value = '';
+    try {
+
+      await loginUser(username.value, password. value);
+      navigate("/dashboard");
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+    /*username.value = '';
     password.value = '';
-    remember.checked = false;
+    remember.checked = false;*/
   }
 
 
@@ -25,7 +43,7 @@ export const LoginPage = () => {
       <form onSubmit={ onSubmit }>
 
         <div className="mb-4">
-          <label className="block text-gray-600">Username</label>
+          <label className="block text-gray-600">Email</label>
           <input type="text" name="username" autoComplete="off" />
         </div>
 
